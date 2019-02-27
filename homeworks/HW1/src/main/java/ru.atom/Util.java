@@ -25,7 +25,13 @@ public class Util {
      * @return the largest of values.
      */
     public static int max(int[] values) {
-        return 0;
+        int n = values.length ;
+        int max=values[0];
+        for (int i = 1; i<n; i++)
+        {
+            if (max<values[i]) max=values[i];
+        }
+        return max;
     }
 
     /**
@@ -34,8 +40,14 @@ public class Util {
      * @param values an argument. Assume values.length > 0.
      * @return the sum of all values.
      */
-    public static long sum(int[] values) {
-        return 0;
+        public static long sum(int[] values) {
+            int n = values.length ;
+            long sum=0;
+            for (int i = 0; i<n; i++)
+            {
+                sum+=values[i];
+            }
+            return sum;
     }
 
 
