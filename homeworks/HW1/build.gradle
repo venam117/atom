@@ -18,5 +18,5 @@ checkstyle {
 
 jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    manifest { attributes 'Main-Class': 'ru.atom.HelloWorld' }
+    manifest { attributes 'Main-Class': 'ru.atom.Util' }
 }
