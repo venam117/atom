@@ -4,21 +4,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Random;
+
 import org.slf4j.LoggerFactory;
 
 public class Game {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(Game.class);
+
     public static void main(String[] args) {
 
-        play("dictionary.txt");
         log.info("Логгер живой");
+        play("dictionary.txt");
 
     }
 
     public static boolean play(String filename) {
 
-        String word = getWord(filename);
-//System.out.println(word);
+        String word = getWord(filename); //System.out.println(word);
         char[] myword = word.toCharArray();
         int count = myword.length;
         System.out.println("Welcome to Bulls and Cows game!");
@@ -37,7 +38,7 @@ public class Game {
             int bul = bulls(inword, myword);
             int cow = cows(inword, word);
             System.out.println("Bulls: " + bul);
-            System.out.println("Cows: " + cow);
+            System.out.println("Cows: " + (cow - bul));
 
         }
 
