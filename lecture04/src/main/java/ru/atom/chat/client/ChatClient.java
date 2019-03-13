@@ -43,10 +43,22 @@ public class ChatClient {
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
         Request request = new Request.Builder()
                 .post(RequestBody.create(mediaType, ""))
-                .url(PROTOCOL + HOST + PORT + "/chat/say?name=" + name+"&text="+msg)
+                .url(PROTOCOL + HOST + PORT + "/chat/say?name=" + name + "&text=" + msg)
                 .build();
         return client.newCall(request).execute();
     }
+
+    //POST host:port/chat/rename?name=my_name
+    public static Response rename(String oldname, String newname) throws IOException {
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+
+        Request request = new Request.Builder()
+                .post(RequestBody.create(mediaType, ""))
+                .url(PROTOCOL + HOST + PORT + "/chat/rename?oldname=" + oldname + "&newname=" + newname)
+                .build();
+        return client.newCall(request).execute();
+    }
+
 
     //GET host:port/chat/online
     public static Response viewOnline() throws IOException {
@@ -55,6 +67,29 @@ public class ChatClient {
                 .url(PROTOCOL + HOST + PORT + "/chat/online")
                 .addHeader("host", HOST + PORT)
                 .build();
+        return client.newCall(request).execute();
+    }
+
+
+    //POST host:port/chat/logout?name=my_name
+    public static Response logout(String name) throws IOException {
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        Request request = new Request.Builder()
+                .post(RequestBody.create(mediaType, ""))
+                .url(PROTOCOL + HOST + PORT + "/chat/logout?name=" + name)
+                .build();
+
+        return client.newCall(request).execute();
+    }
+
+    //POST host:port/chat/clear?name=my_name
+    public static Response clear(String name) throws IOException {
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        Request request = new Request.Builder()
+                .post(RequestBody.create(mediaType, ""))
+                .url(PROTOCOL + HOST + PORT + "/chat/clear?name=" + name)
+                .build();
+
         return client.newCall(request).execute();
     }
 }

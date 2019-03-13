@@ -58,7 +58,6 @@ public class ChatController {
 
     /**
      * curl -X POST -i localhost:8080/chat/logout -d "name=I_AM_STUPID"
-
      */
     @RequestMapping(
             path = "logout",
@@ -69,13 +68,10 @@ public class ChatController {
             usersOnline.remove(name, name);
             messages.add("[" + name + "] logged out");
             return ResponseEntity.ok().build();
-        }
-        else
+        } else
 
             return ResponseEntity.badRequest().body("Already not logged in:(");
     }
-
-
 
     /**
      * curl -X POST -i localhost:8080/chat/say -d "name=I_AM_STUPID&msg=Hello everyone in this chat"
@@ -85,16 +81,13 @@ public class ChatController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> say(@RequestParam("name") String name, @RequestParam("text") String text){
+    public ResponseEntity<String> say(@RequestParam("name") String name, @RequestParam("text") String text) {
         if (usersOnline.containsKey(name)) {
             messages.add("[" + name + "]: " + text);
             return ResponseEntity.ok().build();
-        }
-        else
+        } else
             return ResponseEntity.badRequest().body("Allready not logged in");
     }
-
-
 
     /**
      * curl -i localhost:8080/chat/chat
@@ -109,6 +102,37 @@ public class ChatController {
     }
 
 
+    @RequestMapping(
+            path = "clear",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<String> clear(@RequestParam("name") String name) {
+        if (usersOnline.containsKey(name)) {
+            messages.clear();
+            messages.add("[" + name + "] clicked clear");
+            return ResponseEntity.ok().build();
+        } else
+            return ResponseEntity.badRequest().body("Allready not logged in");
+    }
 
-    /** ещё 2 функции */
+
+    @RequestMapping(
+            path = "rename",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<String> rename(@RequestParam("oldname") String oldname,
+                                         @RequestParam("newname") String newname) {
+        if (usersOnline.containsKey(oldname))
+            if (usersOnline.containsKey(newname))
+                return ResponseEntity.badRequest().body("Name is reserved");
+            else {
+                usersOnline.remove(oldname);
+                usersOnline.put(newname, newname);
+                messages.add("[" + oldname + "] renamed by " + newname);
+                return ResponseEntity.ok().build();
+            }
+        else
+            return ResponseEntity.badRequest().body("Allready not logged in");
+    }
+
 }

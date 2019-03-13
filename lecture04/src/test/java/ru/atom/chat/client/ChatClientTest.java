@@ -22,6 +22,17 @@ public class ChatClientTest {
     }
 
     @Test
+    public void logout() throws IOException {
+        ChatClient.login("Vendetta");
+        Response response = ChatClient.logout("Vendetta");
+        System.out.println("[" + response + "]");
+        String body = response.body().string();
+        System.out.println();
+        Assert.assertTrue(response.code() == 200 || body.equals("Already logged in:("));
+    }
+
+
+    @Test
     public void viewChat() throws IOException {
         Response response = ChatClient.viewChat();
         System.out.println("[" + response + "]");
@@ -40,9 +51,43 @@ public class ChatClientTest {
 
     @Test
     public void say() throws IOException {
-        Response response = ChatClient.say(MY_NAME_IN_CHAT, MY_MESSAGE_TO_CHAT);
+        ChatClient.login("Venam");
+        Response response = ChatClient.say("Venam", MY_MESSAGE_TO_CHAT);
         System.out.println("[" + response + "]");
         System.out.println(response.body().string());
         Assert.assertEquals(200, response.code());
     }
+
+
+    @Test
+    public void clear() throws IOException {
+        ChatClient.login("Venom");
+        Response response = ChatClient.clear("Venom");
+        System.out.println("[" + response + "]");
+        String body = response.body().string();
+        System.out.println();
+        Assert.assertTrue(response.code() == 200 || body.equals("Allready logged in "));
+    }
+
+    @Test
+    public void rename() throws IOException {
+        ChatClient.login("Voron");
+        Response response = ChatClient.rename("Voron", "Voron777");
+        System.out.println("[" + response + "]");
+        String body = response.body().string();
+        System.out.println();
+        Assert.assertTrue(response.code() == 200 || body.equals("Allready logged in "));
+    }
+
+    @Test
+    public void renamef() throws IOException {
+        ChatClient.login("Voron777");
+        ChatClient.login("Voron");
+        Response response = ChatClient.rename("Voron", "Voron777");
+        System.out.println("[" + response + "]");
+        String body = response.body().string();
+        System.out.println();
+        Assert.assertTrue(response.code() == 400 || body.equals("Name is reserved"));
+    }
+
 }
