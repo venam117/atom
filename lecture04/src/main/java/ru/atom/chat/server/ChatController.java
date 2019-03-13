@@ -71,4 +71,5 @@ public class ChatController {
      * curl -i localhost:8080/chat/chat
      */
     //TODO
+    /** ещё 2 функции */
 }
